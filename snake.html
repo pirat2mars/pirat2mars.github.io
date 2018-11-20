@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+
+	<link href="snake.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<h1>SNAKE</h1>
+<div id="plateau"></div>
+
+<button id="start"> Start [Space]</button>
+<div>Touches ZQSD</div>
+<div id="score"></div>
+
+<script>
+	
+	
+	const hauteur = 20;
+	const largeur = 30;
+	var plateau = new Array(hauteur);
+	var mort = 1;
+	var deadTimer;
+
+	var cell = function(){
+		var element;
+		var snake;
+		var pomme;
+	}
+
+	var snake = function(){
+		
+		var direction;
+		var x;
+		var y;
+		var taille;
+		var collecte;
+
+		
+	}
+
+	var nouvellePartie = function (){
+		clearTimeout(deadTimer);
+		snake.taille = 4;
+		snake.x = 10;
+		snake.y = 15;
+		snake.direction="h";
+		snake.collecte = 0;
+		mort = 0;
+		
+		for(i=0;i<hauteur;i++){
+			for(y=0;y<largeur;y++){				
+				document.getElementsByClassName("row")[i].getElementsByClassName("cell")[y].classList.remove("serpent");
+				document.getElementsByClassName("row")[i].getElementsByClassName("cell")[y].classList.remove("pomme");
+				document.getElementsByClassName("row")[i].getElementsByClassName("cell")[y].classList.remove("noir");
+				plateau[i][y].snake = 0 ;
+				plateau[i][y].pomme = 0 ;
+			}
+		}
+
+
+
+
+		placerPomme();
+		console.log(snake.x);
+		refresh();
+
+	}
+
+	var control = function (uneDirection){
+
+		switch(uneDirection){
+			case 'h':
+				if(snake.direction != 'b'){
+					snake.direction = uneDirection;
+				}
+			break;
+			case 'b':
+				if(snake.direction != 'h'){
+					snake.direction = uneDirection;
+				}
+			break;
+			case 'g':
+				if(snake.direction != 'd'){
+					snake.direction = uneDirection;
+				}
+			break;
+			case 'd':
+				if(snake.direction != 'g'){
+					snake.direction = uneDirection;
+				}
+			break;
+		}
+	}
+
+	var placerPomme = function(){
+		while(1){
+			var x = Math.floor(Math.random()*hauteur);
+			var y = Math.floor(Math.random()*largeur);
+			console.log('pomme x'+x+' / y '+y);
+			if(plateau[x][y].snake == 0){
+				console.log('pomme positionnee');
+				plateau[x][y].pomme = 1;
+				document.getElementsByClassName("row")[x].getElementsByClassName("cell")[y].classList.add("pomme");
+				break;
+			}
+		}
+	}
+
+
+	var myTimer;
+	var refresh = function(){
+		
+		document.getElementById("score").innerHTML = "Score "+snake.collecte;
+
+		switch(snake.direction){
+			case 'h':
+				snake.x--;
+			break;
+			case 'b':
+				snake.x++;
+			break;
+			case 'g':
+				snake.y--;
+			break;
+			case 'd':
+				snake.y++;
+			break;
+		}
+		console.log(snake.x +' / '+snake.y);
+		if(snake.x<0 || snake.x>=hauteur || snake.y<0 || snake.y>=largeur )	{
+			console.log("mort hors plateau");
+			clearTimeout(myTimer);
+			mort = 1;
+			mortScreen();
+			
+		}
+		else{
+
+			console.log('plateau snake'+plateau[snake.x][snake.y].snake);
+			if(plateau[snake.x][snake.y].snake > 1){
+				console.log("mort");	
+				clearTimeout(myTimer);	
+				mort = 1;		
+			}
+			else{
+				// pas de serpent sur la position suivante la position prend la taille du serpent +1 car elle va etre decremente par la suite
+				plateau[snake.x][snake.y].snake=(snake.taille+1);
+			}
+			//console.log(plateau[snake.x][snake.y]);
+			//console.log(document.getElementById("plateau"));
+			var pommeBool = 0;
+			// controle de la pomme
+			if(plateau[snake.x][snake.y].pomme == 1){
+				document.getElementsByClassName("row")[snake.x].getElementsByClassName("cell")[snake.y].classList.remove("pomme");
+				plateau[snake.x][snake.y].pomme = 0;
+				snake.taille++;
+				snake.collecte++;
+				placerPomme();
+				pommeBool = 1;
+			}
+
+
+
+			document.getElementsByClassName("row")[snake.x].getElementsByClassName("cell")[snake.y].classList.add("serpent");
+
+			for(i=0;i<hauteur;i++){
+				for(y=0;y<largeur;y++){
+					// si  on trouve une trace de serpent on decremente et supprime la classe si = 0
+					if(plateau[i][y].snake > 0){
+						// quand on trouve une pomme on ne decremente pas
+						if(pommeBool == 0){
+							plateau[i][y].snake--;
+						}
+						//supression du serpent quand 0
+						if(plateau[i][y].snake == 0){
+							document.getElementsByClassName("row")[i].getElementsByClassName("cell")[y].classList.remove("serpent");
+						} 
+					}
+
+
+				}
+			}
+
+
+			if(mort != 1){
+				myTimer = setTimeout(function (){refresh();},  (400 - parseInt(snake.collecte*0.5) ) );
+			}
+			else{
+				mortScreen();
+				clearTimeout(myTimer);
+			}
+		}
+		
+
+		
+	}
+
+	var mortScreen = function(anim = 0){
+
+		var skull = new Map();
+		skull.set( 136, 1);
+		skull.set( 146, 1);
+		skull.set( 156, 1);
+		skull.set( 166, 1);
+		skull.set( 176, 1);
+		skull.set( 127, 1);
+		skull.set( 137, 1);
+		skull.set( 147, 1);
+		skull.set( 157, 1);
+		skull.set( 167, 1);
+		skull.set( 177, 1);
+		skull.set( 187, 1);
+		skull.set( 128, 1);
+		skull.set( 158, 1);
+		skull.set( 188, 1);
+		skull.set( 129, 1);
+		skull.set( 139, 1);
+		skull.set( 149, 1);
+		skull.set( 159, 1);
+		skull.set( 169, 1);
+		skull.set( 179, 1);
+		skull.set( 189, 1);
+		skull.set( 1210, 1);
+		skull.set( 1310, 1);
+		skull.set( 1410, 1);
+		skull.set( 1610, 1);
+		skull.set( 1710, 1);
+		skull.set( 1810, 1);
+		skull.set( 1311, 1);
+		skull.set( 1411, 1);
+		skull.set( 1511, 1);
+		skull.set( 1611, 1);
+		skull.set( 1711, 1);
+		skull.set( 1312, 1);
+		skull.set( 1512, 1);
+		skull.set( 1712, 1);
+
+
+		if(anim == 0){
+		skull.set( 1413, 1);
+		skull.set( 1613, 1);
+		skull.set( 1314, 1);
+		skull.set( 1414, 1);
+		skull.set( 1514, 1);
+		skull.set( 1614, 1);
+		skull.set( 1714, 1);
+		skull.set( 1415, 1);
+		skull.set( 1515, 1);
+		skull.set( 1615, 1);
+		}
+		else{
+		skull.set( 1412, 1);
+		skull.set( 1612, 1);
+		skull.set( 1313, 1);
+		skull.set( 1413, 1);
+		skull.set( 1513, 1);
+		skull.set( 1613, 1);
+		skull.set( 1713, 1);
+		skull.set( 1414, 1);
+		skull.set( 1514, 1);
+		skull.set( 1614, 1);
+		}
+
+
+
+
+		//console.log(skull);
+
+
+		for(i=0;i<hauteur;i++){
+			for(y=0;y<largeur;y++){				
+				document.getElementsByClassName("row")[i].getElementsByClassName("cell")[y].classList.remove("serpent");
+				document.getElementsByClassName("row")[i].getElementsByClassName("cell")[y].classList.remove("pomme");
+				document.getElementsByClassName("row")[i].getElementsByClassName("cell")[y].classList.remove("noir");
+				if(!skull.has(parseInt(y+''+i))){
+					document.getElementsByClassName("row")[i].getElementsByClassName("cell")[y].classList.add("noir");
+				}
+			}
+		}
+
+
+
+		if(mort == 1){
+			deadTimer= setTimeout(function (){
+				if(anim == 0){
+					mortScreen(1);
+				}
+				else{
+					mortScreen(0);
+				}
+			},  100 );				
+		}
+	}
+
+	var initGame = function(){
+		
+		for(i=0;i<hauteur;i++){
+
+			var ligne = new Array(largeur);
+			plateau[i] = ligne ;
+			var div = document.createElement("div");
+			div.className = "row";
+			var referenceLigne = document.getElementById("plateau").appendChild(div);
+
+			for(y=0;y<largeur;y++){
+				plateau[i][y] = new cell;
+				var div2 = document.createElement("div");
+				div2.className = "cell";
+				referenceLigne.appendChild(div2);
+
+			}
+
+		}
+
+		//console.log(plateau);
+	}
+	window.onload = initGame;
+
+	document.getElementById("start").addEventListener("click", function () {nouvellePartie();});
+
+
+
+document.addEventListener('keypress', (event) => {
+  const nomTouche = event.key;
+
+  switch(nomTouche){
+  		case 'z':
+  			control('h');
+  		break;
+  		case 's':
+  			control('b');
+  		break;
+		case 'q':
+			control('g');
+  		break;
+		case 'd':
+			control('d');
+  		break;
+  		case ' ':
+  			if(mort == 1){
+  				nouvellePartie();
+  			}			
+  		break;
+  } 
+  
+});
+
+</script>
+</body>
+</html>

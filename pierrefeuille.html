@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pierre Feuille Ciseau</title>
+	<meta charset="utf-8">
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="style.css" rel="stylesheet" type="text/css">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<main class="container">
+	<section class="row topFull rounded-top">
+
+		<div class="col-12"><h1>Pierre feuille ciseau</h1></div>
+		<div class="col-xl-6 col-xs-12" id="nombreJoueur">Nombre de joueur : <button id="btn1joueur" class="btn" value="1">1 Joueur</button> <button id="btn2joueur" class="btn" value="2">2 Joueurs</button> </div>
+		<div class="col-xl-6 col-xs-12">J1<button class="btn">A</button><button class="btn">Z</button><button class="btn">E</button> / J2 <button class="btn">K</button><button class="btn">L</button><button class="btn">M</button></div>
+	</section>
+	<section class="row resultatFull">
+		<div class="col-xl-2 col-xs-12 text-center" id="divJoueur1">
+			<img src="pierre.png" alt="pierre" class="img-fluid">
+			<img src="feuille.png" alt="feuille" class="img-fluid">
+			<img src="ciseau.png" alt="ciseau" class="img-fluid">
+		</div>
+		<div class="col-xl-8 col-xs-12 text-center align-self-center" id="resultat">
+			<div class="row">
+				<div class="col-xl-4 col-4 text-center" id="resultatG"></div>
+				<div class="col-xl-4 col-4 text-center " id="resultatM"></div>
+				<div class="col-xl-4 col-4 text-center" id="resultatD"></div>
+			</div>
+		</div>
+		<div class="col-xl-2 col-xs-12 text-center" id="divJoueur2">
+			<img src="pierre.png" alt="pierre" class="img-fluid">
+			<img src="feuille.png" alt="feuille" class="img-fluid">
+			<img src="ciseau.png" alt="ciseau" class="img-fluid">
+		</div>
+	</section>
+	<section class="row scoreFull rounded-bottom">
+		<div class="col-2 text-center" id="scoreG"></div>
+		<div class="col-8 text-center" id="scoreM">Score</div>
+		<div class="col-2 text-center" id="scoreD"></div>
+	</section>
+
+</main>
+
+<script>
+
+	var joueurData1 = "";
+	var joueurData2 = "";
+	var nombreJoueur = 0;
+
+	var scoreJoueur1 = 0;
+	var scoreJoueur2 = 0;
+
+	var enJeu = 0;
+
+	var possibilite = new Array('pierre','feuille','ciseau');
+
+
+
+	var resG = document.getElementById('resultatG');
+	var resD = document.getElementById('resultatD');
+	var resM = document.getElementById('resultatM');
+
+	var scoG = document.getElementById('scoreG');
+	var scoD = document.getElementById('scoreD');
+	var scoM = document.getElementById('scoreM');
+
+
+	var choixNombreJoueur = function(nombre){
+		nombreJoueur = nombre;
+		if(nombre == 1){
+		animationPlayer(1,0);
+		animationPlayer(2,1);
+		}
+		else{
+		animationPlayer(1,0);
+		animationPlayer(2,0);
+		}
+	}
+
+
+
+	var choixJoueur = function(numJoueur,choix){
+		if(nombreJoueur != 0 && enJeu != 1  ){
+			clearScreen();
+
+			console.log(numJoueur+' / '+choix);
+			if(numJoueur == 1){
+				joueurData1 = choix;
+				animationPlayer(1,1);
+				// si on a choisi 1 joueur on tire au sort et on exit la fonction pour le joueur 1
+				if(nombreJoueur == 1){				
+					choixJoueur(2,possibilite[Math.floor(Math.random()*3)]);
+					
+					return ;
+				}			
+			}
+			else{
+				joueurData2 = choix;
+				animationPlayer(2,1);
+			}
+			if(joueurData1 != "" && joueurData2 != ""){
+				// on declenche le resultat si on connais les choix
+				enJeu = 1;
+				countdown();
+
+			}
+		}	
+	}
+
+	var resultat = function (){
+
+		resM.style.visibility = 'hidden';
+		resM.style.opacity = 0.0 ;
+
+		$( "#resultatG" ).css('visibility', 'visible').animate({opacity: 1.0}, 1000);
+		$( "#resultatM" ).css('visibility', 'visible').animate({opacity: 1.0}, 1000);
+		$( "#resultatD" ).css('visibility', 'visible').animate({opacity: 1.0}, 1000);
+
+		if(joueurData1 == joueurData2){
+			// egalite
+			resG.innerHTML = "<img src=\""+joueurData1+".png\" class=\"img-fluid\"> ";
+			resD.innerHTML = "<img src=\""+joueurData2+".png\" class=\"img-fluid\"> ";
+			resM.innerHTML = "<h2>Egalité</h2>";
+		}
+		else{
+			switch (joueurData1){
+				case 'pierre':
+					if(joueurData2 == 'ciseau'){
+						//joueur 1 gagne
+						/*$( "#resultatG" ).fadeIn( "slow", function() {
+    						// Animation complete
+  						});*/
+
+  						
+						resG.innerHTML = "<img src=\""+joueurData1+".png\" class=\"img-fluid\"> <p class=\"gagne\">Gagné</p>";
+						resD.innerHTML = "<img src=\""+joueurData2+".png\" class=\"img-fluid\"> <p class=\"perdu\">Perdu</p>";
+						resM.innerHTML = "<h2>Joueur 1 gagne</h2>";
+						scoreJoueur1++;
+					}
+					else{
+						//joueur 2 gagne
+						resG.innerHTML = "<img src=\""+joueurData1+".png\" class=\"img-fluid\"> <p class=\"perdu\">Perdu</p>";
+						resD.innerHTML = "<img src=\""+joueurData2+".png\" class=\"img-fluid\"> <p class=\"gagne\">Gagné</p>";
+						resM.innerHTML = "<h2>Joueur 2 gagne</h2>";
+						scoreJoueur2++;
+					}
+				break;
+				case 'feuille':
+					if(joueurData2 == 'pierre'){
+						//joueur 1 gagne
+						resG.innerHTML = "<img src=\""+joueurData1+".png\" class=\"img-fluid\"> <p class=\"gagne\">Gagné</p>";
+						resD.innerHTML = "<img src=\""+joueurData2+".png\" class=\"img-fluid\"> <p class=\"perdu\">Perdu</p>";
+						resM.innerHTML = "<h2>Joueur 1 gagne</h2>";
+						scoreJoueur1++;
+					}
+					else{
+						//joueur 2 gagne
+						resG.innerHTML = "<img src=\""+joueurData1+".png\" class=\"img-fluid\"> <p class=\"perdu\">Perdu</p>";
+						resD.innerHTML = "<img src=\""+joueurData2+".png\" class=\"img-fluid\"> <p class=\"gagne\">Gagné</p>";
+						resM.innerHTML = "<h2>Joueur 2 gagne</h2>";
+						scoreJoueur2++;
+					}
+				break;
+				case 'ciseau':
+					if(joueurData2 == 'feuille'){
+						//joueur 1 gagne
+						resG.innerHTML = "<img src=\""+joueurData1+".png\" class=\"img-fluid\"> <p class=\"gagne\">Gagné</p>";
+						resD.innerHTML = "<img src=\""+joueurData2+".png\" class=\"img-fluid\"> <p class=\"perdu\">Perdu</p>";
+						resM.innerHTML = "<h2>Joueur 1 gagne</h2>";
+						scoreJoueur1++;
+					}
+					else{
+						//joueur 2 gagne
+						resG.innerHTML = "<img src=\""+joueurData1+".png\" class=\"img-fluid\"> <p class=\"perdu\">Perdu</p>";
+						resD.innerHTML = "<img src=\""+joueurData2+".png\" class=\"img-fluid\"> <p class=\"gagne\">Gagné</p>";
+						resM.innerHTML = "<h2>Joueur 2 gagne</h2>";
+						scoreJoueur2++;
+					}
+				break;
+			}			
+		}
+		joueurData1 = "";
+		joueurData2 = "";
+
+		enJeu=0;
+		
+			animationPlayer(1,0);
+			if(nombreJoueur != 1){
+				animationPlayer(2,0);
+			}
+		scoG.innerHTML= scoreJoueur1 ;
+		scoD.innerHTML = scoreJoueur2;
+	}
+
+	var countdown = function(){
+			var t = 4;
+			var x = setInterval(function() {
+				t--;
+				resM.innerHTML = "<h1 class=\"display-1\">"+t+"</h1>";
+				
+				if(t == 0){
+					clearInterval(x);
+					resultat();
+				} 
+			},200);
+	}
+
+	var clearScreen = function(){
+		resG.innerHTML = "";
+		resD.innerHTML = "";
+		resM.innerHTML = "";
+
+		resG.style.visibility = 'hidden';
+		resG.style.opacity = 0.0 ;
+
+		resD.style.visibility = 'hidden';
+		resD.style.opacity = 0.0 ;
+
+	}
+
+
+	var animationResultat = function(){
+
+	}
+
+
+	
+
+
+	var buttonNombreJoueur=document.getElementById("nombreJoueur").querySelectorAll("button");	
+	buttonNombreJoueur.forEach( function(element) {
+		// statements
+		//console.log(element);
+
+		element.addEventListener("click", function () {choixNombreJoueur(element.value)});
+	});
+
+	var buttonJoueur1=document.getElementById("divJoueur1").querySelectorAll("img");	
+	buttonJoueur1.forEach( function(element) {
+		// statements
+		//console.log(element);
+		element.addEventListener("click", function () {choixJoueur(1,element.alt)});
+	});
+	var buttonJoueur2=document.getElementById("divJoueur2").querySelectorAll("img");	
+	buttonJoueur2.forEach( function(element) {
+		// statements
+		//console.log(element);
+		element.addEventListener("click", function () {choixJoueur(2,element.alt)});
+	});
+
+	var animationPlayer = function (unPlayer,hide){
+		if(hide == 0){
+			if(unPlayer == 1){
+				buttonJoueur1.forEach( function(element) {
+				element.style.transition = '.3s ease-in-out';
+				element.style.filter = 'blur(0px)';				
+				});
+			}
+			else{
+				buttonJoueur2.forEach( function(element) {
+				element.style.transition = '.3s ease-in-out';
+				element.style.filter = 'blur(0px)';				
+				});			
+			}		
+		}
+		if (hide == 1){
+			if(unPlayer == 1){
+				buttonJoueur1.forEach( function(element) {
+				element.style.transition = '.3s ease-in-out';
+				element.style.filter = 'blur(3px)';				
+				});
+			}
+			else{
+				buttonJoueur2.forEach( function(element) {
+				element.style.transition = '.3s ease-in-out';
+				element.style.filter = 'blur(3px)';				
+				});			
+			}		
+		}
+	
+	}
+	// on blur les images tant que l'on a pas choisi 1 ou 2 joueurs  onload
+	var init = function(){
+		animationPlayer(1,1);
+		animationPlayer(2,1);
+		clearScreen();
+	}
+
+	window.onload = init;
+
+	$(document).keypress(function( event ) {
+		if(event.key == "a"){
+			choixJoueur(1,possibilite[0]);
+		}
+		else if(event.key == "z"){
+			choixJoueur(1,possibilite[1]);
+		}
+		else if(event.key == "e"){
+			choixJoueur(1,possibilite[2]);
+		}
+		else if(event.key == "k"){
+			choixJoueur(2,possibilite[0]);
+		}
+		else if(event.key == "l"){
+			choixJoueur(2,possibilite[1]);
+		}
+		else if(event.key == "m"){
+			choixJoueur(2,possibilite[2]);
+		}
+		else if(event.key == "1"){
+			choixNombreJoueur(1);
+		}
+		else if(event.key == "2"){
+			choixNombreJoueur(2);
+		}
+
+
+
+
+	});
+
+</script>
+
+</body>
+</html>

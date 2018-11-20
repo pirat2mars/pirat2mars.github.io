@@ -1,0 +1,105 @@
+body {
+	//background-color: orange;
+}
+div{
+
+}
+h1{
+	//font-size:1.2rem;
+}
+h2{
+	//font-size:1.1rem;
+}
+#general-header{
+	//background-color: #dfe6e9;
+}
+#image-cv{
+	//max-width: 70%;
+}
+#linkedin{
+	//width:20px;
+	//border: 0;
+}
+.citation{
+
+}
+.titre-poste{
+
+}
+
+.red{
+	background-color: red;
+}
+.green{
+	background-color: green;
+}
+
+.btn:hover {
+	cursor:default !important;
+color: #fff !important;
+text-decoration: none;
+}
+
+.topFull{
+	background-color:#AEB6BF; 
+	padding-bottom: 5px;
+}
+
+.resultatFull{
+	background-color:#F4F6F6;
+}
+#divJoueur2 img{
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+#divJoueur1{
+background-color:#EAECEE;
+}
+#divJoueur2{
+background-color:#EAECEE;
+}
+#resultat{
+	//background-color:#F4F6F6;
+}
+
+#resultatG {
+min-height: 270px;
+}
+
+#resultatD img{
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.gagne{
+ color:#007bff;
+ font-size: 2rem;
+}
+.perdu{
+color:#dc3545;
+font-size: 1.5rem;
+}
+.scoreFull{
+	background-color:#AEB6BF; 
+}
+#scoreG{
+	 
+}
+#scoreM{
+	
+}
+#scoreD{
+	 
+}
+
+
+
+@media (max-width: 767.98px) { 
+	#divJoueur1 img{
+		width:30%;
+	}
+	#divJoueur2 img{
+		width:30%;
+	}
+
+ }

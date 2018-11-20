@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+
+
+<div id="test">
+	<div class="navigation">toto </div>
+</div>
+
+<div class="navigation">
+titi	
+</div>
+
+<a href="">google</a>
+
+<button id="boutonCoucou">Coucou </button>
+
+<script>
+
+var i = document.getElementById("test");
+var c = i.getElementsByClassName("navigation");
+console.log(i.nodeName);
+console.log(i.nodeType);
+console.log(i.parentNode);
+console.log(i.childNodes);
+
+// on clone le div sans le texte a l'interieur ( false  , true pour integrer)
+var clone = i.cloneNode();
+// je cree un node texte avec comme texte ceci est un clone dans le document
+var texteclone = document.createTextNode("Ceci est un clone");
+//j'integre l'enfant (texteclone ) dans le clone
+clone.appendChild(texteclone);
+// j'integre le clone dans le document a la fin du body
+document.querySelector("body").appendChild(clone);
+
+
+var d = document.querySelector("a"); //2 moyen de modifier un  attribut
+d.href="https://google.com";
+d.setAttribute("target","_blank");
+
+document.querySelector("div").style.color='red';
+
+var t = document.querySelector('a');
+console.log(t.hasAttribute("href"));
+console.log(t.getAttribute("href"));
+
+var b = document.getElementById('boutonCoucou');
+var change = function(){
+	var color = ["red","green","blue","orange","yellow","purple","black","white"];
+	var n = color.length;
+
+	var aleatoire = Math.floor(Math.random()*n);
+	console.log(aleatoire);
+	var body = document.querySelector('body');
+	body.style.backgroundColor = color[aleatoire];
+	this.innerHTML = "Merci couillon";
+}
+
+b.addEventListener("click",change);
+
+/*
+function voiture(modele,marque,couleur){
+	this.modele=modele;
+	this.marque=marque;
+	this.couleur=couleur;
+	this.vitesse=0;
+	this.moteurAllume=false;
+	this.demarre = function(){
+		if(this.moteurAllume == false){
+			this.moteurAllume = true;
+		}
+	}
+	this.accelere = function(){
+		this.vitesse = this.vitesse+10;
+	}
+	this.freine = function(){
+		this.vitesse = this.vitesse-10;
+	}
+	this.eteint = function(){
+		this.moteurAllume == true ? this.moteurAllume = false : "" ;
+	}
+
+
+
+}
+
+var voiture1 = new voiture("Clio","Renault","Rouge");
+voiture1.demarre();
+voiture1.accelere();
+console.log(voiture1);
+
+
+
+
+try{
+	console.log(d);
+}catch(error){
+	console.log(error.name);
+	console.log(error.message);
+}
+finally{
+	console.log("Message qui s'affiche dans tous les cas meme en cas d'erreur");
+}
+
+*/
+
+</script>
+
+
+</body>
+</html>

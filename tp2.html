@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)http://www.david-legrand.com/formation/7-js/TD/tp2.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Je teste javascript</title>
+	
+</head>
+<body>
+	<button id="souligne">Souligné</button><button id="gras">Gras</button><button id="italique">Italique</button>
+	<h1>TP2 - Bibliothèque</h1>
+	<article class="livre">
+		<h2 class="titre">Le grand livre des fantômes</h2>
+		<p class="author">Dominique Lormier</p>
+		<p class="genre">Sciences humaines et exactes</p>
+		<p class="resume">Sans être un grand livre sur le sujet, l'ouvrage de Dominique Lormier "Le grand guide des fantômes" (titre un peu prétentieux selon moi, surtout que ce 'grand guide' ne fait que 210 pages, mais bon) est assez intéressant. </p>
+	</article>
+	<article class="livre">
+		<h2 class="titre">Le central</h2>
+		<p class="author">Alain Gerber</p>
+		<p class="genre">Littérature</p>
+		<p class="resume">Il s'agit sans conteste du roman du Central, café célèbre au coeur de la ville de Belfort ; mais un café ne peut vivre sans toutes les âmes qui l'habitent, le visitent, y circulent ; ce sont les romans de toutes ces âmes sous forme de portraits ciselés, qu'Alain Gerber nous offre dans ce livre qui pourrait se mesurer sans complexes aux célèbres "Portraits" de la littérature passée.</p>
+	</article>
+		<article class="livre">
+		<h2 class="titre">Sans Abuelo Petite</h2>
+		<p class="author">Cécile Guivarch</p>
+		<p class="genre">Théâtre et Poésie</p>
+		<p class="resume">En vers, elle raconte le grand-père, celui qu’elle n’a pas connu, celui qui a fui vers une île participer à une autre révolution après l’échec de sa guerre en Espagne.</p>
+	</article>
+	<article class="livre">
+		<h2 class="titre">L'arménienne aux yeux d'or</h2>
+		<p class="author">Maurice Gouiran</p>
+		<p class="genre">Littérature</p>
+		<p class="resume">En cette nuit du 13 avril les Marseillais stupéfaits voient le Vieux-Port brûler : la mer s'embrase, les yachts et les barques des pêcheurs explosent les uns après les autres. Cet incendie spectaculaire est l'épilogue d'une folle course-poursuite entre la 205 rouge d'un jeune Marseillais, Calambo, et d'une mystérieuse B.M. noire.</p>
+	</article>
+		<article class="livre">
+		<h2 class="titre">Miss Shumway jette un sort</h2>
+		<p class="author">James Hadley Chase</p>
+		<p class="genre">Policiers et thrillers</p>
+		<p class="resume">James Hadley Chase est un monument de la littérature policière classique et l'aura de ses romans a contribué au succès de la Série Noire, créée en 1945 par Gallimard.</p>
+	</article>
+
+
+
+<script>
+
+//A	
+	var body = document.querySelector("body");
+	var texte = document.createTextNode("TOTO TOTO");
+	var texteclone = texte.cloneNode();
+
+	var premierEnfant = body.firstChild;
+
+	body.appendChild(texte);
+	body.insertBefore(texteclone,premierEnfant);
+
+// B
+	var h1 = document.getElementsByTagName("h1");	
+	var h2 = document.getElementsByTagName("h2");
+
+	for(i=0;i<h1.length;i++){
+		h1[i].innerHTML= "Titre "+h1[i].innerHTML;
+	}
+	for(i=0;i<h2.length;i++){
+		h2[i].innerHTML= "Titre "+h2[i].innerHTML;
+	}
+
+var tagAuthor = document.getElementsByClassName("author");
+
+var policeSouligne = function (){
+	for(i=0;i<tagAuthor.length;i++){
+		tagAuthor[i].style.textDecoration="underline";
+		tagAuthor[i].style.fontWeight="normal";
+		tagAuthor[i].style.fontStyle="normal";
+	}
+}
+
+var policeGras = function (){
+	for(i=0;i<tagAuthor.length;i++){
+		tagAuthor[i].style.textDecoration="none";
+		tagAuthor[i].style.fontWeight="bold";
+		tagAuthor[i].style.fontStyle="normal";
+	}
+}
+
+
+var policeItalique = function (){
+	for(i=0;i<tagAuthor.length;i++){
+		tagAuthor[i].style.textDecoration="none";
+		tagAuthor[i].style.fontWeight="normal";
+		tagAuthor[i].style.fontStyle="italic";
+	}
+}
+
+document.getElementById("souligne").addEventListener("click",policeSouligne);
+document.getElementById("gras").addEventListener("click",policeGras);
+document.getElementById("italique").addEventListener("click",policeItalique);
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body></html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<form method="GET">
+<h2>Quel est la couleur du cheval blanc d'Henri IV ?</h2>
+<label for="q1blanc" id="labq1blanc">blanc</label>
+<input type="radio" name="q1" id="q1blanc" value="blanc">
+<label for="q1noir" id="labq1noir">noir</label>
+<input type="radio" name="q1" id="q1noir" value="noir">
+<label for="q1marron" id="labq1marron">marron</label>
+<input type="radio" name="q1" id="q1marron" value="marron">
+<label for="q1d" id="labq1d">la réponse D</label>
+<input type="radio" name="q1" id="q1d" value="d">
+
+<h2>Quand je suis frais, fraiche, je suis chaud(e).Qui suis-je ?</h2>
+<label for="q2biere" id="labq2biere">bière</label>
+<input type="radio" name="q2" id="q2biere" value="biere">
+<label for="q2pain" id="labq2pain">pain</label>
+<input type="radio" name="q2" id="q2pain" value="pain">
+<label for="q2fromage" id="labq2fromage">fromage</label>
+<input type="radio" name="q2" id="q2fromage" value="fromage">
+<label for="q2maman" id="labq2maman">Ta maman le jour de ta conception</label>
+<input type="radio" name="q2" id="q2maman" value="maman">
+
+
+<h2>On me prend sans me toucher, qui suis-je ?</h2>
+<label for="q3photo" id="labq3photo">photo</label>
+<input type="radio" name="q3" id="q3photo" value="photo">
+<label for="q3douche" id="labq3douche">douche</label>
+<input type="radio" name="q3" id="q3douche" value="douche">
+<label for="q3cafe" id="labq3cafe">café</label>
+<input type="radio" name="q3" id="q3cafe" value="cafe">
+<label for="q3maman" id="labq3maman">Encore ta maman</label>
+<input type="radio" name="q3" id="q3maman" value="maman">
+
+
+
+</form>
+<button onclick="boutonValider(1);" id="boutonSubmit" disabled> valide </button>
+
+
+<script>
+	var questions = new Array("q1","q2","q3");
+	var reponses = new Array("blanc","pain","photo");
+	var boutonValider = function(a = 0){
+		var validerAffichage=0;
+	// on verifie que toutes les questions ont ete repondues
+		for(i=0;i<questions.length;i++){
+			var radioDetail = document.getElementsByName(questions[i]);
+			for(z=0;z<radioDetail.length;z++){
+				//console.log(radioDetail[z].checked);
+				if(radioDetail[z].checked == true ){
+					validerAffichage++ ;
+					//console.log(document.getElementById('lab'+radioDetail[z].id).innerHTML);
+					
+					if(a == true){
+							if(radioDetail[z].value == reponses[i] ){
+								document.getElementById('lab'+radioDetail[z].id).className="green";
+							}
+							else{
+								document.getElementById('lab'+radioDetail[z].id).className="red";
+							}
+					}
+				} 
+				else{
+					document.getElementById('lab'+radioDetail[z].id).className="";
+				}
+			}
+
+		}
+			questions.length == validerAffichage ? document.getElementById("boutonSubmit").disabled=false : document.getElementById("boutonSubmit").disabled=true ;
+			console.log(validerAffichage);
+
+	}
+
+	var radio = document.querySelectorAll('input');
+		console.log(radio.length);
+		for(y=0;y<radio.length;y++){
+			radio[y].addEventListener("change",boutonValider);
+		}
+	//document.getElementById("boutonSubmit").addEventListener("click",boutonValider);
+
+</script>
+
+
+
+
+</body>
+</html>

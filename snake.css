@@ -1,0 +1,27 @@
+#plateau{
+	//border:solid;
+	//border-width: 0.5px;
+}
+
+.row{
+	line-height: 0px;
+}
+
+.cell{
+	width: 25px;
+	height: 25px;
+	display: inline-table;
+	border:solid;
+	border-width: 0.5px;
+	border-color: #AEB6BF;
+}
+
+.serpent{
+	background-color: green;
+}
+.pomme{
+	background-color: red;
+}
+.noir{
+	background-color: black;
+}
